@@ -12,16 +12,31 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { Menu, Sidebar } from "@/Components/sidebar";
-import { Link } from "@inertiajs/react";
+import { Menu, Sidebar } from "@/Components/dashboard/sidebar";
+import { Link, useForm } from "@inertiajs/react";
+import { FormEventHandler } from "react";
+import { User } from "@/types";
 
 export function Header({
+    user,
     menu,
+    search,
     className,
 }: {
+    user: User;
     menu: Menu[];
+    search?: string;
     className?: string;
 }) {
+    const { setData, get } = useForm({
+        search: "",
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        get(route("basic"));
+    };
+
     return (
         <div
             className={cn(
@@ -38,7 +53,16 @@ export function Header({
                 </SheetContent>
             </Sheet>
 
-            <Input type="search" placeholder="Search..." className="sm:w-1/3" />
+            <form onSubmit={submit} className="w-full sm:w-1/3">
+                <Input
+                    id="search"
+                    type="search"
+                    name="search"
+                    placeholder="search..."
+                    defaultValue={search}
+                    onChange={(e) => setData("search", e.target.value)}
+                />
+            </form>
 
             <div className="flex gap-2 sm:gap-4">
                 <DropdownMenu>
@@ -68,11 +92,13 @@ export function Header({
                     <DropdownMenuTrigger asChild>
                         <div className="inline-flex items-center gap-4 cursor-pointer">
                             <Avatar>
-                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarImage
+                                    src={`https://ui-avatars.com/api/?name=${user.name}`}
+                                />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                             <span className="hidden text-sm sm:flex">
-                                John Doe
+                                {user.name}
                             </span>
                             <ChevronDown className="hidden w-4 h-4 sm:flex" />
                         </div>
@@ -82,7 +108,11 @@ export function Header({
                             <Link href={route("profile.edit")}>Profile</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                            <Link href={route("logout")} method="post">
+                            <Link
+                                href={route("logout")}
+                                method="post"
+                                as="button"
+                            >
                                 Logout
                             </Link>
                         </DropdownMenuItem>

@@ -2,11 +2,13 @@ import { cn } from "@/lib/utils";
 import { LucideIcon, Settings } from "lucide-react";
 import { Link } from "@inertiajs/react";
 import { Button, buttonVariants } from "@/Components/ui/button";
+import ApplicationLogo from "@/Components/application-logo";
 
 interface SubMenu {
     name: string;
     href: string;
     icon: LucideIcon;
+    active: boolean;
 }
 
 export interface Menu {
@@ -23,20 +25,24 @@ export function Sidebar({
 }) {
     return (
         <div className={cn("flex flex-col gap-4 p-4 h-screen", className)}>
+            <ApplicationLogo className="w-10 h-10" />
+
             <ul className="flex-grow space-y-2 list-none">
                 {menu.map((item, index) => (
                     <li key={index}>
-                        <h2 className="font-semibold tracking-tight">
+                        <h2 className="mb-2 font-semibold tracking-tight">
                             {item.label}
                         </h2>
-                        <ul className="list-none">
+                        <ul className="space-y-2 list-none">
                             {item.subMenu.map((item, index) => (
                                 <li key={index}>
                                     <Link
                                         href={item.href}
                                         className={cn(
                                             buttonVariants({
-                                                variant: "ghost",
+                                                variant: item.active
+                                                    ? "default"
+                                                    : "ghost",
                                             }),
                                             "text-sm flex justify-start w-full"
                                         )}
