@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Basic;
 use Illuminate\Http\Request;
+use App\Events\ProcessNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Basic\StoreBasicRequest;
 use App\Http\Requests\Basic\UpdateBasicRequest;
@@ -38,6 +40,9 @@ class BasicController extends Controller
     {
         $data = $request->safe()->all();
         Basic::create($data);
+
+        //sample send notification
+        event(new ProcessNotification(Auth::user(), 'test'));
         return Redirect::route('basic');
     }
 

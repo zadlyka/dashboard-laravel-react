@@ -14,7 +14,7 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import { Menu, Sidebar } from "@/Components/dashboard/sidebar";
 import { Link, useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { User } from "@/types";
 
 export function Header({
@@ -28,6 +28,8 @@ export function Header({
     search?: string;
     className?: string;
 }) {
+    const [message, setMessage] = useState("");
+
     const { setData, get } = useForm({
         search: "",
     });
@@ -36,6 +38,18 @@ export function Header({
         e.preventDefault();
         get(route("basic"));
     };
+
+    useEffect(() => {
+        const privateChannel = window.Echo.private(
+            `App.Models.User.${user.id}`
+        );
+        privateChannel.listen(
+            ".notification",
+            function (data: { message: string }) {
+                setMessage(data.message);
+            }
+        );
+    }, []);
 
     return (
         <div
@@ -70,21 +84,25 @@ export function Header({
                         <Button className="relative ">
                             <Bell className="w-4 h-4 " />
                             <span className="sr-only">Notifications</span>
-                            <motion.div
-                                animate={{
-                                    scale: [1, 1.2, 1.2, 1, 1],
-                                }}
-                                transition={{
-                                    ease: "linear",
-                                    duration: 1.5,
-                                    repeat: Infinity,
-                                }}
-                                className="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full -top-2 -end-2"
-                            />
+                            {message && (
+                                <motion.div
+                                    animate={{
+                                        scale: [1, 1.2, 1.2, 1, 1],
+                                    }}
+                                    transition={{
+                                        ease: "linear",
+                                        duration: 1.5,
+                                        repeat: Infinity,
+                                    }}
+                                    className="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full -top-2 -end-2"
+                                />
+                            )}
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuItem>Not found</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            {message ? message : "Not found"}
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
 
