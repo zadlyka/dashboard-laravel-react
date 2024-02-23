@@ -13,6 +13,11 @@ use App\Http\Requests\Basic\UpdateBasicRequest;
 
 class BasicController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Basic::class, 'basic');
+    }
+
     /**
      * Display a listing of the resource.
      */
