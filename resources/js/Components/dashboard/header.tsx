@@ -36,7 +36,7 @@ export function Header({
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        get(route("basic"));
+        get(route().current() ?? "");
     };
 
     useEffect(() => {
@@ -130,6 +130,7 @@ export function Header({
                                 href={route("logout")}
                                 method="post"
                                 as="button"
+                                className="w-full"
                             >
                                 Logout
                             </Link>

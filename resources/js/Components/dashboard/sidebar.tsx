@@ -9,7 +9,6 @@ interface SubMenu {
     name: string;
     href: string;
     icon: LucideIcon;
-    active: boolean;
     permission?: string;
 }
 
@@ -61,9 +60,14 @@ export function Sidebar({
                                                 href={item.href}
                                                 className={cn(
                                                     buttonVariants({
-                                                        variant: item.active
-                                                            ? "default"
-                                                            : "ghost",
+                                                        variant:
+                                                            route()
+                                                                .current()
+                                                                ?.search(
+                                                                    item.name.toLowerCase()
+                                                                ) !== -1
+                                                                ? "default"
+                                                                : "ghost",
                                                     }),
                                                     "text-sm flex justify-start w-full"
                                                 )}
