@@ -3,13 +3,17 @@ import { User } from "@/types";
 import { Sidebar } from "@/Components/dashboard/sidebar";
 import { ScrollArea } from "@/Components/ui/scroll-area";
 import { Header } from "@/Components/dashboard/header";
-import { Grid2X2, LayoutDashboard, ShieldEllipsis, UserIcon } from "lucide-react";
+import {
+    Grid2X2,
+    LayoutDashboard,
+    ShieldEllipsis,
+    UserIcon,
+} from "lucide-react";
 
 export default function DashboardLayout({
     user,
-    search,
     children,
-}: PropsWithChildren<{ user: User; search?: string }>) {
+}: PropsWithChildren<{ user: User }>) {
     const menu = [
         {
             label: "Pages",
@@ -50,12 +54,7 @@ export default function DashboardLayout({
                 user={user}
             />
             <ScrollArea className="w-full h-screen">
-                <Header
-                    user={user}
-                    menu={menu}
-                    search={search}
-                    className="sticky top-0"
-                />
+                <Header user={user} menu={menu} className="sticky top-0" />
                 <div>{children}</div>
             </ScrollArea>
         </main>

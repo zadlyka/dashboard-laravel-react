@@ -19,6 +19,13 @@ import {
 import { buttonVariants } from "@/Components/ui/button";
 import { MoreVertical } from "lucide-react";
 import Paginate, { PaginateLink } from "@/Components/paginate";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/Components/ui/select";
 
 interface RolePaginate extends PaginateLink {
     data: Role[];
@@ -27,10 +34,12 @@ interface RolePaginate extends PaginateLink {
 export default function Index({
     auth,
     paginate,
-    search,
-}: PageProps<{ paginate: RolePaginate; search?: string }>) {
+}: PageProps<{ paginate: RolePaginate }>) {
+    const params = new URLSearchParams(window.location.search);
+    const sort = params.get("sort") ?? "";
+
     return (
-        <DashboardLayout user={auth.user} search={search}>
+        <DashboardLayout user={auth.user}>
             <Head title="Role" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -44,12 +53,36 @@ export default function Index({
                                 adipisicing elit.
                             </p>
                         </div>
-                        <Link
-                            href={route("role.create")}
-                            className={buttonVariants()}
-                        >
-                            Add
-                        </Link>
+
+                        <div className="inline-flex gap-2">
+                            <Select
+                                onValueChange={(value) => {
+                                    location.replace(
+                                        `${route().current()}?sort=${value}`
+                                    );
+                                }}
+                                defaultValue={sort}
+                            >
+                                <SelectTrigger className="hidden w-[180px] sm:flex">
+                                    <SelectValue placeholder="Sort By" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="name:asc">
+                                        Name - ASC
+                                    </SelectItem>
+                                    <SelectItem value="name:desc">
+                                        Name - DESC
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+
+                            <Link
+                                href={route("role.create")}
+                                className={buttonVariants()}
+                            >
+                                Add
+                            </Link>
+                        </div>
                     </div>
 
                     <Table>

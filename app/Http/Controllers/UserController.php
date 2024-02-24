@@ -22,10 +22,14 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $paginate = User::search($request->input('search'))->simplePaginate(1);
+        $search = $request->input('search');
+        $sort =  $request->input('sort');
+        $filter =  $request->input('filter');
+
+        $paginate = User::search($search)->sort($sort)->filter($filter)->simplePaginate(5);
+
         return Inertia::render('User/Index', [
             'paginate' => $paginate,
-            'search' => $request->input('search')
         ]);
     }
 

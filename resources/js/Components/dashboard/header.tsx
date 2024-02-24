@@ -20,14 +20,15 @@ import { User } from "@/types";
 export function Header({
     user,
     menu,
-    search,
     className,
 }: {
     user: User;
     menu: Menu[];
-    search?: string;
     className?: string;
 }) {
+    const params = new URLSearchParams(window.location.search);
+    const search = params.get("search") ?? "";
+
     const [message, setMessage] = useState("");
 
     const { setData, get } = useForm({

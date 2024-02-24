@@ -38,4 +38,15 @@ class Role extends Model
             return $query->where('updated_at', $value);
         });
     }
+
+    public function scopeSort(Builder $query, $sortBy): void
+    {
+        $query->when($sortBy ?? false, function ($query, $sort) {
+            $sortby = explode(":", $sort);
+            $field = $sortby[0];
+            $order = $sortby[1];
+
+            return $query->orderBy($field, $order);
+        });
+    }
 }

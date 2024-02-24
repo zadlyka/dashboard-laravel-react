@@ -23,10 +23,14 @@ class BasicController extends Controller
      */
     public function index(Request $request)
     {
-        $paginate = Basic::search($request->input('search'))->simplePaginate(1);
+        $search = $request->input('search');
+        $sort =  $request->input('sort');
+        $filter =  $request->input('filter');
+
+        $paginate = Basic::search($search)->sort($sort)->filter($filter)->simplePaginate(5);
+
         return Inertia::render('Basic/Index', [
             'paginate' => $paginate,
-            'search' => $request->input('search')
         ]);
     }
 
