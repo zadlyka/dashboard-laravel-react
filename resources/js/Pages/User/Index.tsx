@@ -1,5 +1,5 @@
 import { Head, Link } from "@inertiajs/react";
-import { Basic, PageProps } from "@/types";
+import { User, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     DropdownMenu,
@@ -27,26 +27,26 @@ import {
     SelectValue,
 } from "@/Components/ui/select";
 
-interface BasicPaginate extends PaginateLink {
-    data: Basic[];
+interface UserPaginate extends PaginateLink {
+    data: User[];
 }
 
 export default function Index({
     auth,
     paginate,
-}: PageProps<{ paginate: BasicPaginate }>) {
+}: PageProps<{ paginate: UserPaginate }>) {
     const params = new URLSearchParams(window.location.search);
     const sort = params.get("sort") ?? "";
 
     return (
         <DashboardLayout user={auth.user}>
-            <Head title="Basic" />
+            <Head title="User" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="inline-flex justify-between w-full">
                         <div className="space-y-1">
                             <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-                                Basic
+                                User
                             </h2>
                             <p className="text-xs sm:text-sm text-muted-foreground">
                                 Lorem ipsum dolor sit, amet consectetur
@@ -77,7 +77,7 @@ export default function Index({
                             </Select>
 
                             <Link
-                                href={route("basic.create")}
+                                href={route("user.create")}
                                 className={buttonVariants()}
                             >
                                 Add
@@ -87,7 +87,7 @@ export default function Index({
 
                     <Table>
                         <TableCaption>
-                            A list of your recent basics.
+                            A list of your recent users.
                         </TableCaption>
                         <TableHeader>
                             <TableRow>
@@ -96,7 +96,7 @@ export default function Index({
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {paginate.data?.map((item: Basic) => (
+                            {paginate.data?.map((item: User) => (
                                 <TableRow key={item.id}>
                                     <TableCell className="font-medium">
                                         {item.name}
@@ -110,7 +110,7 @@ export default function Index({
                                                 <DropdownMenuItem asChild>
                                                     <Link
                                                         href={route(
-                                                            "basic.show",
+                                                            "user.show",
                                                             item.id
                                                         )}
                                                     >
@@ -120,7 +120,7 @@ export default function Index({
                                                 <DropdownMenuItem asChild>
                                                     <Link
                                                         href={route(
-                                                            "basic.edit",
+                                                            "user.edit",
                                                             item.id
                                                         )}
                                                     >
@@ -130,7 +130,7 @@ export default function Index({
                                                 <DropdownMenuItem asChild>
                                                     <Link
                                                         href={route(
-                                                            "basic.destroy",
+                                                            "user.destroy",
                                                             item.id
                                                         )}
                                                         method="delete"

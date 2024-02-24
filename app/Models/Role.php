@@ -8,12 +8,17 @@ use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Basic extends Model
+class Role extends Model
 {
     use HasFactory, SoftDeletes, HasUuids;
 
     protected $fillable = [
         'name',
+        'permissions',
+    ];
+
+    protected $casts = [
+        'permissions' => 'array',
     ];
 
     public function scopeSearch(Builder $query, $value)

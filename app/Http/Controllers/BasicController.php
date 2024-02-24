@@ -13,15 +13,24 @@ use App\Http\Requests\Basic\UpdateBasicRequest;
 
 class BasicController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Basic::class, 'basic');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $paginate = Basic::search($request->input('search'))->simplePaginate(1);
+        $search = $request->input('search');
+        $sort =  $request->input('sort');
+        $filter =  $request->input('filter');
+
+        $paginate = Basic::search($search)->sort($sort)->filter($filter)->simplePaginate(5);
+
         return Inertia::render('Basic/Index', [
             'paginate' => $paginate,
-            'search' => $request->input('search')
         ]);
     }
 

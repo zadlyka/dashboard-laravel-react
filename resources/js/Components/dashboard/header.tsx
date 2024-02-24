@@ -20,14 +20,15 @@ import { User } from "@/types";
 export function Header({
     user,
     menu,
-    search,
     className,
 }: {
     user: User;
     menu: Menu[];
-    search?: string;
     className?: string;
 }) {
+    const params = new URLSearchParams(window.location.search);
+    const search = params.get("search") ?? "";
+
     const [message, setMessage] = useState("");
 
     const { setData, get } = useForm({
@@ -36,7 +37,7 @@ export function Header({
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        get(route("basic"));
+        get(route().current() ?? "");
     };
 
     useEffect(() => {
@@ -63,7 +64,7 @@ export function Header({
                     <MenuIcon />
                 </SheetTrigger>
                 <SheetContent side="left">
-                    <Sidebar menu={menu} className="py-8" />
+                    <Sidebar menu={menu} className="py-8" user={user} />
                 </SheetContent>
             </Sheet>
 
@@ -130,6 +131,7 @@ export function Header({
                                 href={route("logout")}
                                 method="post"
                                 as="button"
+                                className="w-full"
                             >
                                 Logout
                             </Link>
