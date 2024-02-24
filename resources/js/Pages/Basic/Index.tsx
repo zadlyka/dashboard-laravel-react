@@ -26,6 +26,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
+import { createQueryString } from "@/lib/utils";
 
 interface BasicPaginate extends PaginateLink {
     data: Basic[];
@@ -58,7 +59,9 @@ export default function Index({
                             <Select
                                 onValueChange={(value) => {
                                     location.replace(
-                                        `${route().current()}?sort=${value}`
+                                        route().current() +
+                                            "?" +
+                                            createQueryString("sort", value)
                                     );
                                 }}
                                 defaultValue={sort}

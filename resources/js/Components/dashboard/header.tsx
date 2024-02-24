@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn, createQueryString } from "@/lib/utils";
 import { Bell, ChevronDown, Menu as MenuIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import { Button } from "@/Components/ui/button";
@@ -13,8 +13,8 @@ import {
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { Menu, Sidebar } from "@/Components/dashboard/sidebar";
-import { Link, useForm } from "@inertiajs/react";
-import { FormEventHandler, useEffect, useState } from "react";
+import { Link } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 import { User } from "@/types";
 
 export function Header({
@@ -30,15 +30,6 @@ export function Header({
     const search = params.get("search") ?? "";
 
     const [message, setMessage] = useState("");
-
-    const { setData, get } = useForm({
-        search: "",
-    });
-
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-        get(route().current() ?? "");
-    };
 
     useEffect(() => {
         const privateChannel = window.Echo.private(
@@ -68,16 +59,25 @@ export function Header({
                 </SheetContent>
             </Sheet>
 
-            <form onSubmit={submit} className="w-full sm:w-1/3">
-                <Input
-                    id="search"
-                    type="search"
-                    name="search"
-                    placeholder="search..."
-                    defaultValue={search}
-                    onChange={(e) => setData("search", e.target.value)}
-                />
-            </form>
+            <Input
+                id="search"
+                type="search"
+                placeholder="search..."
+                defaultValue={search}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        location.replace(
+                            route().current() +
+                                "?" +
+                                createQueryString(
+                                    "search",
+                                    (e.target as HTMLButtonElement).value
+                                )
+                        );
+                    }
+                }}
+                className="w-full sm:w-1/3"
+            />
 
             <div className="flex gap-2 sm:gap-4">
                 <DropdownMenu>
