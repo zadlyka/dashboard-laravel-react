@@ -30,6 +30,9 @@ class UserController extends Controller
 
         return Inertia::render('User/Index', [
             'paginate' => $paginate,
+            'filters' => [
+                'roles' => Role::get(),
+            ]
         ]);
     }
 

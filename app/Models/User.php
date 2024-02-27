@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -71,6 +72,10 @@ class User extends Authenticatable
 
         $query->when($value['updated_at'] ?? false, function ($query, $value) {
             return $query->where('updated_at', $value);
+        });
+
+        $query->when($value['role_id'] ?? false, function ($query, $value) {
+            return $query->where('role_id', $value);
         });
     }
 

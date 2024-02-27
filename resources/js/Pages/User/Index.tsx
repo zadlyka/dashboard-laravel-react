@@ -1,5 +1,5 @@
 import { Head, Link } from "@inertiajs/react";
-import { User, PageProps } from "@/types";
+import { User, PageProps, Role } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     DropdownMenu,
@@ -35,9 +35,11 @@ interface UserPaginate extends PaginateLink {
 export default function Index({
     auth,
     paginate,
-}: PageProps<{ paginate: UserPaginate }>) {
+    filters,
+}: PageProps<{ paginate: UserPaginate; filters: { roles: Role[] } }>) {
     const params = new URLSearchParams(window.location.search);
     const sort = params.get("sort") ?? "";
+    const role = params.get("filter[role_id]") ?? "";
 
     return (
         <DashboardLayout user={auth.user}>
@@ -56,6 +58,34 @@ export default function Index({
                         </div>
 
                         <div className="inline-flex gap-2">
+                            <Select
+                                onValueChange={(value) => {
+                                    location.replace(
+                                        route().current() +
+                                            "?" +
+                                            createQueryString(
+                                                "filter[role_id]",
+                                                value
+                                            )
+                                    );
+                                }}
+                                defaultValue={role}
+                            >
+                                <SelectTrigger className="hidden w-[180px] sm:flex">
+                                    <SelectValue placeholder="Filter Role" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {filters.roles.map((item) => (
+                                        <SelectItem
+                                            value={item.id}
+                                            key={item.id}
+                                        >
+                                            {item.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+
                             <Select
                                 onValueChange={(value) => {
                                     location.replace(
@@ -95,6 +125,9 @@ export default function Index({
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Name</TableHead>
+                                <TableHead className="hidden sm:table-cell">
+                                    Email
+                                </TableHead>
                                 <TableHead>Action</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -103,6 +136,9 @@ export default function Index({
                                 <TableRow key={item.id}>
                                     <TableCell className="font-medium">
                                         {item.name}
+                                    </TableCell>
+                                    <TableCell className="hidden font-medium sm:table-cell">
+                                        {item.email}
                                     </TableCell>
                                     <TableCell>
                                         <DropdownMenu>
