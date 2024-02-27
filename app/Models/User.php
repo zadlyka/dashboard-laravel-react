@@ -48,6 +48,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucfirst($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');

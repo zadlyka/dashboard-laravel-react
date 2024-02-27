@@ -11,11 +11,11 @@ export default function Edit({ auth }: PageProps) {
             <Head title="Profile" />
             <div className="p-4">
                 <div className="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
-                    <Card className="p-4">
+                    <Card className="p-4 sm:p-8">
                         <UpdateProfileInformationForm className="max-w-xl" />
                     </Card>
 
-                    <Card className="p-4">
+                    <Card className="p-4 sm:p-8">
                         <UpdatePasswordForm className="max-w-xl" />
                     </Card>
                 </div>

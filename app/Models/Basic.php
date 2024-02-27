@@ -16,6 +16,11 @@ class Basic extends Model
         'name',
     ];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucfirst($value);
+    }
+
     public function scopeSearch(Builder $query, $value)
     {
         $query->when($value ?? false, function ($query, $value) {
