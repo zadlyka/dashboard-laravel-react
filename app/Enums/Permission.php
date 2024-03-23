@@ -18,9 +18,9 @@ enum Permission: string
     case Update_User = "203";
     case Delete_User = "204";
 
-    case Manage_Basic = "300";
-    case Create_Basic = "301";
-    case Read_Basic = "302";
-    case Update_Basic = "303";
-    case Delete_Basic = "304";
+    case Manage_Category = "300";
+    case Create_Category = "301";
+    case Read_Category = "302";
+    case Update_Category = "303";
+    case Delete_Category = "304";
 }

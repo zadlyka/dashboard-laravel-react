@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Permission;
-use App\Enums\RoleId;
 use App\Models\Role;
+use App\Enums\RoleId;
+use App\Enums\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -31,8 +31,8 @@ class RoleSeeder extends Seeder
             'name' => RoleId::Basic->name,
             'permissions' =>  [
                 (object) [
-                    'value' => Permission::Manage_Basic->value,
-                    'label' => str_replace("_", " ", Permission::Manage_Basic->name)
+                    'value' => Permission::Manage_Category->value,
+                    'label' => str_replace("_", " ", Permission::Manage_Category->name)
                 ],
 
             ]

@@ -15,10 +15,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{user}', [UserController::class, 'show'])
         ->name('user.show');
 
-
-
     Route::post('/user', [UserController::class, 'store'])->name('user.store');
-
 
     Route::patch('/user/{user}', [UserController::class, 'update'])->name('user.update');
 

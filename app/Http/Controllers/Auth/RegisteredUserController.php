@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
-use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\RegisterRequest;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -39,8 +38,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-        $request->session()->put("mode", "student");
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(route('dashboard', absolute: false));
     }
 }

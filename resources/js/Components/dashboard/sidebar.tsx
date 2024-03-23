@@ -45,9 +45,9 @@ export function Sidebar({
             <ul className="flex-grow space-y-2 list-none">
                 {menu.map((item, index) => (
                     <li key={index}>
-                        <h2 className="mb-2 font-semibold tracking-tight">
+                        <h5 className="mb-2 text-lg font-semibold tracking-tight">
                             {item.label}
-                        </h2>
+                        </h5>
                         <ul className="space-y-2 list-none">
                             {item.subMenu.map(
                                 (item, index) =>

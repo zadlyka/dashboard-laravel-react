@@ -15,10 +15,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/role/{role}', [RoleController::class, 'show'])
         ->name('role.show');
 
-
-
     Route::post('/role', [RoleController::class, 'store'])->name('role.store');
-
 
     Route::patch('/role/{role}', [RoleController::class, 'update'])->name('role.update');
 

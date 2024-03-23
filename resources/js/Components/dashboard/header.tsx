@@ -1,5 +1,4 @@
 "use client";
-import { motion } from "framer-motion";
 import { cn, createQueryString } from "@/lib/utils";
 import { Bell, ChevronDown, Menu as MenuIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
@@ -30,18 +29,6 @@ export function Header({
     const search = params.get("search") ?? "";
 
     const [message, setMessage] = useState("");
-
-    useEffect(() => {
-        const privateChannel = window.Echo.private(
-            `App.Models.User.${user.id}`
-        );
-        privateChannel.listen(
-            ".notification",
-            function (data: { message: string }) {
-                setMessage(data.message);
-            }
-        );
-    }, []);
 
     return (
         <div
@@ -82,21 +69,11 @@ export function Header({
             <div className="flex gap-2 sm:gap-4">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className="relative ">
+                        <Button className="relative" size="icon">
                             <Bell className="w-4 h-4 " />
                             <span className="sr-only">Notifications</span>
                             {message && (
-                                <motion.div
-                                    animate={{
-                                        scale: [1, 1.2, 1.2, 1, 1],
-                                    }}
-                                    transition={{
-                                        ease: "linear",
-                                        duration: 1.5,
-                                        repeat: Infinity,
-                                    }}
-                                    className="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full -top-2 -end-2"
-                                />
+                                <div className="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full -top-2 -end-2" />
                             )}
                         </Button>
                     </DropdownMenuTrigger>

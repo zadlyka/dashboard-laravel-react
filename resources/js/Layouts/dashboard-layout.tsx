@@ -4,9 +4,9 @@ import { Sidebar } from "@/Components/dashboard/sidebar";
 import { ScrollArea } from "@/Components/ui/scroll-area";
 import { Header } from "@/Components/dashboard/header";
 import {
-    Grid2X2,
-    LayoutDashboard,
-    ShieldEllipsis,
+    ComponentIcon,
+    LayoutDashboardIcon,
+    ShieldEllipsisIcon,
     UserIcon,
 } from "lucide-react";
 
@@ -21,13 +21,13 @@ export default function DashboardLayout({
                 {
                     name: "Dashboard",
                     href: route("dashboard"),
-                    icon: LayoutDashboard,
+                    icon: LayoutDashboardIcon,
                     permission: undefined,
                 },
                 {
                     name: "Role",
                     href: route("role"),
-                    icon: ShieldEllipsis,
+                    icon: ShieldEllipsisIcon,
                     permission: "100",
                 },
                 {
@@ -37,9 +37,9 @@ export default function DashboardLayout({
                     permission: "200",
                 },
                 {
-                    name: "Basic",
-                    href: route("basic"),
-                    icon: Grid2X2,
+                    name: "Category",
+                    href: route("category"),
+                    icon: ComponentIcon,
                     permission: "300",
                 },
             ],
@@ -54,7 +54,7 @@ export default function DashboardLayout({
                 user={user}
             />
             <ScrollArea className="w-full h-screen">
-                <Header user={user} menu={menu} className="sticky top-0" />
+                <Header user={user} menu={menu} className="sticky top-0 z-50" />
                 <div>{children}</div>
             </ScrollArea>
         </main>

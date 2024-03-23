@@ -149,16 +149,6 @@ export default function Index({
                                                 <DropdownMenuItem asChild>
                                                     <Link
                                                         href={route(
-                                                            "user.show",
-                                                            item.id
-                                                        )}
-                                                    >
-                                                        Detail
-                                                    </Link>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem asChild>
-                                                    <Link
-                                                        href={route(
                                                             "user.edit",
                                                             item.id
                                                         )}
